@@ -710,11 +710,19 @@
     const bcrypt = window.dcodeIO.bcrypt;
 
     document.getElementById("btnLogin").addEventListener("click", login);
+
+    document.getElementById("username").addEventListener("input", (e) => {
+      e.target.value = e.target.value.toUpperCase();
+    });
     
     async function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
       const msg = document.getElementById("loginMsg");
+      const btn = document.getElementById("btnLogin");
+    
+      const username = usernameInput.value.trim().toUpperCase();
+      const password = passwordInput.value;
     
       msg.style.color = "#a72d54";
     
@@ -722,6 +730,10 @@
         msg.textContent = "Completa todos los campos.";
         return;
       }
+    
+      // 🔥 estado loading en botón
+      btn.disabled = true;
+      btn.textContent = "Validando...";
     
       try {
         const { data, error } = await window.supabaseClient
@@ -742,13 +754,23 @@
           return;
         }
     
-        msg.style.color = valid ? "#1f5d39" : "#a72d54";
+        msg.style.color = "#1f5d39";
         msg.textContent = "Acceso correcto...";
     
         setTimeout(() => {
           showAdminPanel();
           loadData();
         }, 500);
+    
+      } catch (err) {
+        msg.textContent = "Error de login.";
+        console.error(err);
+      } finally {
+        // 🔥 restaurar botón siempre
+        btn.disabled = false;
+        btn.textContent = "Ingresar";
+      }
+    }
     
       } catch (err) {
         msg.textContent = "Error de login.";
