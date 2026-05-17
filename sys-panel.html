@@ -551,13 +551,18 @@
     #togglePassword{
       position: absolute;
       right: 12px;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      height: 16px;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
       color: var(--muted);
+      padding: 6px;
+      border-radius: 8px;
     }
+    
+    #togglePassword:hover{
+      background: rgba(0,0,0,0.05);
+    }
+    
   </style>
 </head>
 <body>
