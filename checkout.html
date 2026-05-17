@@ -1222,8 +1222,20 @@
             encodeURIComponent(message);
 
           setTimeout(function () {
-            window.location.href = whatsappUrl;
-          }, 300);
+
+            // reset del formulario
+           form.reset();
+
+           // quitar loading
+           setLoading(false);
+
+           // reset botón (si aplica en tu función)
+           updateSubmitButton();
+
+           // redirigir a WhatsApp
+          window.location.href = whatsappUrl;
+
+        }, 300);
         });
       }
 
